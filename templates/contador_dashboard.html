@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}FERREMAS - Panel de Contador{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Panel de Contador</h1>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Transacciones Pendientes</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Método de Pago</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pedido in pedidos %}
+                            {% if pedido.metodo_pago == 'transferencia' and pedido.estado == 'pendiente' %}
+                            <tr>
+                                <td>{{ pedido.id }}</td>
+                                <td>{{ pedido.fecha }}</td>
+                                <td>${{ pedido.total }}</td>
+                                <td>{{ pedido.metodo_pago }}</td>
+                                <td>
+                                    <span class="badge bg-warning">Pendiente de Confirmación</span>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-info">Detalles</a>
+                                    <a href="#" class="btn btn-sm btn-success">Confirmar Pago</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Rechazar</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No hay transacciones pendientes</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Registro de Transacciones</h5>
+            </div>
+            <div class="card-body">
+                <p>Llevar el registro de las transacciones de venta.</p>
+                <a href="#" class="btn btn-success">Ver Registro</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Reportes Financieros</h5>
+            </div>
+            <div class="card-body">
+                <p>Elaborar balances y reportes financieros.</p>
+                <a href="#" class="btn btn-info">Generar Reportes</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

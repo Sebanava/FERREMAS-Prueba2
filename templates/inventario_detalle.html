@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}FERREMAS - Detalle de Inventario{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li class="breadcrumb-item active">Detalle de Inventario</li>
+                </ol>
+            </nav>
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Detalle de Inventario - Consumo de Web Service</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Información del Producto</h5>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>ID</th>
+                                    <td>{{ producto.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <td>{{ producto.nombre }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <td>{{ producto.descripcion }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Precio</th>
+                                    <td>${{ producto.precio }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Categoría</th>
+                                    <td>{{ producto.categoria }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Información de Inventario (Web Service)</h5>
+                            <div class="alert alert-info">
+                                <p><strong>Simulación de consumo de Web Service de Inventario</strong></p>
+                                <p>En un sistema real, estos datos serían consumidos desde un servicio web externo.</p>
+                            </div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Stock Disponible</th>
+                                    <td>
+                                        {{ stock_info.stock_disponible }}
+                                        {% if stock_info.stock_disponible > 10 %}
+                                            <span class="badge bg-success">Alto</span>
+                                        {% elif stock_info.stock_disponible > 0 %}
+                                            <span class="badge bg-warning">Limitado</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Agotado</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Ubicación</th>
+                                    <td>{{ stock_info.ubicacion }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Último Reabastecimiento</th>
+                                    <td>{{ stock_info.ultimo_reabastecimiento }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Estado</th>
+                                    <td>
+                                        {% if stock_info.estado == 'Disponible' %}
+                                            <span class="badge bg-success">{{ stock_info.estado }}</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">{{ stock_info.estado }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">Volver al Catálogo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

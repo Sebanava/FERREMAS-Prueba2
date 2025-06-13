@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}FERREMAS - Panel de Vendedor{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Panel de Vendedor</h1>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Pedidos Pendientes</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Método de Entrega</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pedido in pedidos %}
+                            <tr>
+                                <td>{{ pedido.id }}</td>
+                                <td>Usuario #{{ pedido.usuario_id }}</td>
+                                <td>{{ pedido.fecha }}</td>
+                                <td>${{ pedido.total }}</td>
+                                <td>{{ pedido.metodo_entrega }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-info">Detalles</a>
+                                    <a href="#" class="btn btn-sm btn-success">Aprobar</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Rechazar</a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No hay pedidos pendientes</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Productos Disponibles</h5>
+            </div>
+            <div class="card-body">
+                <p>Consultar el inventario de productos disponibles en bodega.</p>
+                <a href="#" class="btn btn-success">Ver Inventario</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">Despachos</h5>
+            </div>
+            <div class="card-body">
+                <p>Organizar despacho de productos a clientes.</p>
+                <a href="#" class="btn btn-warning">Gestionar Despachos</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}FERREMAS - Panel de Administrador{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Panel de Administrador</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Informes de Venta</h5>
+            </div>
+            <div class="card-body">
+                <p>Generar informes de venta mensual y análisis de desempeño de la tienda.</p>
+                <a href="#" class="btn btn-primary">Ver Informes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Gestión de Usuarios</h5>
+            </div>
+            <div class="card-body">
+                <p>Administrar usuarios del sistema: vendedores, bodegueros y contadores.</p>
+                <a href="#" class="btn btn-success">Gestionar Usuarios</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Gestión de Productos</h5>
+            </div>
+            <div class="card-body">
+                <p>Agregar, editar o eliminar productos del catálogo.</p>
+                <a href="#" class="btn btn-info">Gestionar Productos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">Estrategias de Venta</h5>
+            </div>
+            <div class="card-body">
+                <p>Desarrollar estrategias de ventas y promociones.</p>
+                <a href="#" class="btn btn-warning">Gestionar Promociones</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nueva sección para el Web Service de Inventario -->
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Consulta de Inventario (Web Service)</h5>
+            </div>
+            <div class="card-body">
+                <p>Consultar inventario de productos usando el Web Service.</p>
+                <form action="#" method="GET" class="mb-3">
+                    <div class="input-group">
+                        <select class="form-select" id="producto_consulta">
+                            <option selected disabled>Seleccionar producto...</option>
+                            {% for i in range(1, 7) %}
+                            <option value="{{ i }}">Producto #{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="button" class="btn btn-info" onclick="consultarInventario()">Consultar</button>
+                    </div>
+                </form>
+                <script>
+                    function consultarInventario() {
+                        const productoId = document.getElementById('producto_consulta').value;
+                        if (productoId) {
+                            window.location.href = `/consultar_inventario/${productoId}`;
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}FERREMAS - Carrito de Compras{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Carrito de Compras</h1>
+
+{% if items %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.producto.nombre }}</td>
+                <td>${{ item.producto.precio }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ item.subtotal }}</td>
+                <td>
+                    <form action="{{ url_for('eliminar_del_carrito', producto_id=item.producto.id) }}" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                <td>${{ total }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Método de Entrega</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="entrega" id="retiro" value="retiro" checked>
+                    <label class="form-check-label" for="retiro">
+                        Retiro en Tienda
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="entrega" id="despacho" value="despacho">
+                    <label class="form-check-label" for="despacho">
+                        Despacho a Domicilio
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Método de Pago</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="pago" id="webpay" value="webpay" checked>
+                    <label class="form-check-label" for="webpay">
+                        <strong>WebPay</strong> - Tarjeta de crédito o débito
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="pago" id="debito" value="debito">
+                    <label class="form-check-label" for="debito">
+                        Tarjeta de Débito
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="pago" id="credito" value="credito">
+                    <label class="form-check-label" for="credito">
+                        Tarjeta de Crédito
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="pago" id="transferencia" value="transferencia">
+                    <label class="form-check-label" for="transferencia">
+                        Transferencia Bancaria
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-grid gap-2 col-6 mx-auto mt-4">
+    <form action="{{ url_for('proceso_pago') }}" method="POST">
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg">Proceder al Pago</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Seguir Comprando</a>
+        </div>
+    </form>
+</div>
+
+{% else %}
+<div class="alert alert-info">
+    <p>Tu carrito está vacío.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary mt-2">Ver Productos</a>
+</div>
+{% endif %}
+{% endblock %}

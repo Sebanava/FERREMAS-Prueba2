@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}FERREMAS - Inicio{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Productos Destacados</h1>
+
+<div class="row">
+    {% for producto in productos %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen }}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='img/producto-default.jpg') }}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text">{{ producto.descripcion|truncate(100) }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="h5 mb-0">${{ producto.precio }}</span>
+                    <form action="{{ url_for('agregar_al_carrito', producto_id=producto.id) }}" method="POST">
+                        <div class="input-group input-group-sm mb-2">
+                            <input type="number" name="cantidad" value="1" min="1" class="form-control" style="max-width: 60px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            No hay productos disponibles en este momento.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

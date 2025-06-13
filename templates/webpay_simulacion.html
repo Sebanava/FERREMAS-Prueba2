@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Webpay - Proceso de Pago{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <img src="{{ url_for('static', filename='img/webpay_logo.png') }}" alt="Webpay Plus" height="30" class="me-2">
+                        Pago Seguro
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>Esta es una simulación de Webpay para fines de demostración.</strong><br>
+                        En un entorno real, aquí se integraría la API oficial de Transbank/Webpay.
+                    </div>
+                    
+                    <h5 class="card-title">Detalles de la transacción</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Comercio:</th>
+                            <td>FERREMAS Hardware Store</td>
+                        </tr>
+                        <tr>
+                            <th>Orden de compra:</th>
+                            <td>#OC-{{ orden_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Monto:</th>
+                            <td>${{ monto }}</td>
+                        </tr>
+                    </table>
+                    
+                    <h5 class="mt-4">Seleccione su medio de pago:</h5>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipoPago" id="credito" checked>
+                                <label class="form-check-label" for="credito">
+                                    Tarjeta de Crédito
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="tipoPago" id="debito">
+                                <label class="form-check-label" for="debito">
+                                    Tarjeta de Débito
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form action="{{ url_for('confirmar_pago') }}" method="POST">
+                        <div class="mb-3">
+                            <label for="tarjeta" class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-control" id="tarjeta" placeholder="4051 8856 0044 6623" value="4051 8856 0044 6623" required>
+                            <small class="text-muted">Para simulación, use este número de tarjeta de prueba</small>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="vencimiento" class="form-label">Fecha de Vencimiento</label>
+                                <input type="text" class="form-control" id="vencimiento" placeholder="MM/AA" value="12/25" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123" value="123" required>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">Pagar ${{ monto }}</button>
+                            <a href="{{ url_for('carrito') }}" class="btn btn-outline-secondary">Cancelar y volver al carrito</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <small class="text-muted">Transacción segura procesada por Webpay Plus (Simulación)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
